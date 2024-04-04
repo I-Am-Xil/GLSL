@@ -1,3 +1,5 @@
-glslang-master-window-Release/
-glslang-master-window-Release.zip
-glslViewer/
+glslang-master-windows-Release/
+glslang-master-windows-Release.zip
+**/glslViewer/
+*.exe
+**.cmake
