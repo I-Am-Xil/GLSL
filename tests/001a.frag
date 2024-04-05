@@ -37,8 +37,8 @@ void main(){
 
     coord *= rotate(u_time * rotation_speed);
 
-    color += coord.x * (vec3(1.0 - size * sin(length(coord) + u_time * shrink_speed)) * brightness + palette(u_time ));
-    color.rg *= rotate(u_time);
+    color += coord.x * (vec3(1.0 - size * sin(length(coord) + u_time * shrink_speed)) * brightness + palette(u_time));
+    
 
 
     fragColor = vec4(color, 1.0);

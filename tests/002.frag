@@ -27,6 +27,7 @@ void main(){
     vec3 color = vec3(0.0);
 
     coord = fract(coord * 2.0 - 0.5);
+    coord *= rotate(-u_time * 1.0);
 
     color.rg = coord;
 

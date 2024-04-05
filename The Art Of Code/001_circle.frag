@@ -19,14 +19,5 @@ void main(){
     float radius = 0.3;
     color = vec3(smoothstep(radius, radius - 0.02, d));
 
-/*
-    if(d < radius){
-        color = vec3(1.0);
-    }
-    else{
-        color = vec3(0.0);
-    }
-*/
-
     fragColor = vec4(color, 1.0);
 }
