@@ -9,6 +9,10 @@ uniform float u_time;
 uniform vec2 u_resolution;
 uniform vec2 u_mouse;
 
+mat2 rotate(float angle){
+    return mat2(cos(angle), -sin(angle), sin(angle), cos(angle));
+}
+
 vec3 palette(float t){
     vec3 a = vec3(0.5, 0.5, 0.5);
     vec3 b = vec3(0.5, 0.5, 0.5);
@@ -19,12 +23,12 @@ vec3 palette(float t){
 }
 
 void main(){
-    vec2 coord = gl_FragCoord.xy / u_resolution - 0.5;
+    vec2 coord = (gl_FragCoord.xy / u_resolution - 0.5) * rotate(u_time);
     vec3 color = vec3(0.0);
 
-    float len = length(coord);
+    coord = fract(coord * 2.0 - 0.5);
 
-    color.r = sin(len);
+    color.rg = coord;
 
     fragColor = vec4(color, 1.0);
 }

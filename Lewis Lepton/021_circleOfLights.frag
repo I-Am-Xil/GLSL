@@ -11,7 +11,7 @@ mat2 rotate(float angle){
 
 void main(){
 
-    float n_lights = 20.0;
+    const float n_lights = 20.0;
 
     vec2 coord = (gl_FragCoord.xy / u_resolution);
     vec3 color = vec3(0.0);

@@ -23,19 +23,19 @@ mat2 rotate(float angle){
 }
 
 void main(){
-    vec2 coord = 20.0 * (gl_FragCoord.xy * 2.0 - u_resolution) / u_resolution.y;
+    vec2 coord = 10.0 * (gl_FragCoord.xy * 2.0 - u_resolution) / u_resolution.y;
 
     vec3 color = vec3(0.0);
 
     float size = 20.0;
     float brightness = 0.1;
-    float shrink_speed = 5.0;
-    float rotation_speed = 1.0;
+    float shrink_speed = 10.0;
+    float rotation_speed = 2.0;
 
     coord *= rotate(u_time * rotation_speed);
 
-
-    color += coord.x * (vec3(1.0 - size * sin(length(coord) + u_time * shrink_speed)) * brightness + palette(u_time));
+    color += coord.x * (vec3(1.0 - size * sin(length(coord) + u_time * shrink_speed)) * brightness + palette(u_time ));
+    color.rg *= rotate(u_time);
 
 
     fragColor = vec4(color, 1.0);
