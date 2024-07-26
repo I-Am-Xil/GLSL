@@ -70,14 +70,40 @@ float Polygon(vec2 uv, vec2 offset, float radius, float sides, float blur){
     return smoothstep(radius,  radius - blur, cos(floor(0.5 + angle / slice) * slice - angle) * length(uv));
 }
 
+vec3 Palette(float t){
+    vec3 a = vec3(0.5, 0.5, 0.5);
+    vec3 b = vec3(0.5, 0.5, 0.5);
+    vec3 c = vec3(1.0, 1.0, 1.0);
+    vec3 d = vec3(0.000, 0.333, 0.667);
+
+    return a + b*cos(6.28318 * (c * t + d));
+}
+
+mat2 Scale(vec2 scale){
+    return mat2(scale.x, 0.0,
+                0.0, scale.y);
+}
+
 void main(){
     //vec2 uv = gl_FragCoord.xy/u_resolution;
     vec2 uv = AspectRatio(gl_FragCoord.xy);
+    vec2 uv0 = uv;
     vec3 color = vec3(0.0);
 
     uv = Tile(uv, 2) - 0.5;
 
-    color += vec3(Rectangle(uv*Rotate2D(PI/4), vec2(0.37), vec4(abs(tan(u_time/2))+0.01), vec2(0.0)));
+    color += vec3(Rectangle(uv*Rotate2D(u_time * PI/2)*Scale(vec2(1.+abs(tan(u_time/2.)))), vec2(0.355), vec4(0.01), vec2(0.0)));
+    color = max(color, vec3(Rectangle(uv*Rotate2D(-u_time * PI/2)*Scale(vec2(1.+abs(tan(u_time/2.+PI)))), vec2(0.355), vec4(0.01), vec2(0.0))));
+
+    color *= Palette(uv0.y/2.+u_time);
+
+    //! Light is additive
+
+    //color = max(color, vec3(Band(0.1, vec2(0.1), sin(u_time)*1.2, uv0.y)));
+    //color *= vec3(Band(0.1, vec2(0.1), sin(u_time*2.)*1.2, uv0.y));
+    //color *= vec3(Band(0.1, vec2(0.1), 0., (uv0*Rotate2D(u_time)).y));
+    color *= vec3(Band(0.1, vec2(0.1), sin(u_time*2.)*1.2, uv0.y)) + vec3(Band(0.1, vec2(0.1), 0., (uv0*Rotate2D(u_time)).y));
+
 
 
 
