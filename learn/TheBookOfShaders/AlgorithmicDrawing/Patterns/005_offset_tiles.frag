@@ -29,10 +29,8 @@ float RectanglePerimeter(vec2 uv, vec2 scale, float thickness, vec4 blur){
     return rect;
 }
 
-vec2 TilesOffset(vec2 uv){
-    //assigning operator determines movement orientation
-    //uv axis inside mod() determines if row/col is even or odd
-    uv.x += step(1., mod(uv.y, 2.)) * 0.5 * u_time;
+vec2 TilesBrick(vec2 uv){
+    uv.x += step(1., mod(uv.y, 2.)) * 0.5;
     return fract(uv);
 }
 
@@ -44,8 +42,9 @@ void main(){
     vec2 uv = (2.0 * gl_FragCoord.xy - u_resolution) / u_resolution.y;
     vec3 color = vec3(1.0);
 
-
     uv *= 5.;
+
+    vec2 uv0 = uv;
 
     uv.x += step(1., mod(uv.y, 2.)) * 1.0 * smoothstep(0.0, 1.0, 2.*mod(u_time/2., 2.));
     uv.x -= step(1., mod(-uv.y, 2.)) * 1.0 * smoothstep(0.0, 1.0, 2.*mod(u_time/2., 2.));
@@ -59,8 +58,8 @@ void main(){
     uv.y -= step(1., mod(uv.x, 2.)) * 1.0 * smoothstep(3.0, 4.0, 2.*mod(u_time/2., 2.));
     uv.y += step(1., mod(-uv.x, 2.)) * 1.0 * smoothstep(3.0, 4.0, 2.*mod(u_time/2., 2.));
 
-
     uv = fract(uv);
+
 
     color -= vec3(Circle(uv-0.5, 0.3, 0.01));
 
